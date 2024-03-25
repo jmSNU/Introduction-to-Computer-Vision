@@ -36,8 +36,53 @@
 \begin{document}
 \maketitle
 
-\section{}
+\section{Camera Calibration}
+\subsection*{a}
+From the result of SVD, 
+\begin{equation}
+    \mathbf{AV=U\Sigma}
+\end{equation}
+Since $\mathbf{V \in O(n)}$, the column vector of $\mathbf{V}$, denoting $\mathbf{v_i}$ , can form the basis of $\mathbb{R}^n$. That is, $\forall \mathbf{x} \in \mathbf{R}^n, \mathbf{x} = \sum_i a_i \mathbf{v_i},\text{ for } a_i \in \mathbb{R}$.
+This results in $\mathbf{Ap} =\sum_i a_i \mathbf{Av_i} = \sum_i a_i\sigma_i \mathbf{u_i}$. Thus,
+\begin{equation}
+    \lVert \mathbf{Av}\rVert^2 = \sum_i a_i^2\sigma_i^2
+    \label{eqn2}
+\end{equation}
+It is a convention to make the diagonal entries of $\mathbf{\Sigma}$, $\sigma_i$, be ordered, that is, $\sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_r$.
+Thus, to minimize equation \ref{eqn2}, $a_1 = a_2 = \cdots = a_{r-1} = 0$ and $a_r = 1$, since $\mathbf{p}$ is normalized. This implies $\mathbf{p = v_n}$.(note that $r = n$ since we assumed over-determined system.)
 
+\subsection*{b}
+\subsection*{c}
+Before determining $\mathbf{P}$, I proved that $\mathbf{p} = \mathbf{A}^\dagger \mathbf{b}$.
+Consider SVD of $\mathbf{A = U\Sigma V^T} \in \mathbb{R}^{m\times n}$, where $\mathbf{U}\in O(m), \mathbf{\Sigma} \in \mathbf{R}^{m\times n}, \mathbf{V} \in O(n)$.
+\begin{equation}
+    \lVert \mathbf{Ap-b} \rVert^2 = \lVert \mathbf{U\Sigma V^Tp-b} \rVert^2 = \lVert \mathbf{\Sigma V^Tp - U^Tb} \rVert (\because \mathbf{U \in O(m)})
+\end{equation}
+Let $\mathbf{V^Tp = q}, \mathbf{U^Tb = r}$ and rewrite the problem as follow.
+\begin{equation}
+    \text{Find } \arg\min_{\mathbf{q}} \lVert \mathbf{\Sigma q} - \mathbf{r}\rVert^2
+\end{equation}
+This problem can be solved as follow.
+\begin{equation}
+    \lVert \mathbf{\Sigma q - r}\rVert^2 = \sum_{i=1}^r (\sigma_iq_i - r_i)^2 \text{ where } r = \min \left\{m,n\right\}
+\end{equation}
+We can uniquely select the $q_i = r_i/\sigma_i$, for $i = 1,\cdots, r$, or $\mathbf{q = \Sigma^{-1}\mathbf{r}}$, to minimize this expression.
+This implies $\mathbf{p = V\Sigma^{-1}U^Tb}$. Thus, proof is done, noting that $\mathbf{A^\dagger = (A^TA)^{-1}A^T = (V\Sigma^T\Sigma V^T)^{-1}\Sigma^TU^T = V\Sigma^{-1}U^T}$
 
+% If $\mathbf{p}$ is the solution of $\mathbf{Ap = b}$, then $\mathbf{\Sigma q = r}$, that is $\sigma_i {q}_i = {r}_i$ for $i = 1,\cdots, r$(Note, $r = \min\left\{m,n\right\}$).
+% Since the orthogonal transformation conserves the norm, $\mathbf{p}$ has a same norm to $\mathbf{q}$, $\lVert \mathbf{p}\rVert = \lVert \mathbf{q} \rVert$.
+% Therefore, to minimize $\lVert \mathbf{p} \rVert$, we have to minimize $\lVert \mathbf{q}\rVert$. This problem can be formulated as follow:
+% \begin{equation}
+%     \arg \min_{\mathbf{q}} \lVert \mathbf{q} \rVert^2 \text{ where } \sigma_i q_i = r_i \text{ for } \forall i \in \left\{1,2,\cdots,r\right\}
+% \end{equation}
+% The solution of the problem above must satisfy $q_{r+1}, \cdots , q_n = 0$. Therefore, by denoting $\Sigma^{-1} \\ = \text{diag}(\sigma_1^{-1}, \cdots, \sigma_r^{-1},0,\cdots,0) \in \mathbb{R}^{m \times n}$,
+% \begin{equation}
+%     \mathbf{q = V^Tp = \Sigma^{-1}U^Tb}
+% \end{equation}
+% This implies 
+% \begin{equation}
+%     \mathbf{p = V\Sigma^{-1}U^Tb = A^\dagger b} 
+% \end{equation}
+% 
 
 \end{document}
