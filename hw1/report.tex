@@ -170,5 +170,14 @@ The code above returns the following matrix.
  [ 2.54860563e-08 -3.33770907e-08  7.71079873e-08 -1.11022302e-16]]
 \end{python}
 As the (3,4) element of the matrix above is almost the accuracy limit of floating number system, there is some deviation when scaling of camera matrix in problem 1-(b).\footnote{The assertion that a 64-bit computer system is restricted to a maximum precision of 16 decimal digits is commonly based on the standard double-precision floating-point format, adhering to the IEEE 754 standard.}
-This is common phenomenon in computer science.
+This is common phenomenon in computer science. Eventhough such deviation, the relative error is extremely small. I calcuated the relative error of each element in second camera matrix by applying following formular, elementwisely.\footnote{Please refer the jupyter notebook to see my implementation} The result is described on following matrix.
+\begin{equation}
+    (\text{Scaled camera matrix in } P\_1 - P\_2)/P\_2
+\end{equation}
+
+\begin{python}
+[[ 7.99230207e-06  2.90627666e-04  2.94346922e-04  1.71676066e-05]
+ [-2.63511359e-05  1.88538311e-05  2.18941679e-05 -3.20431581e-06]
+ [-2.01662730e-05  1.61420625e-05  1.49830370e-04 -1.11022302e-16]]
+\end{python}
 \end{document}
