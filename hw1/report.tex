@@ -42,8 +42,8 @@
     \item $\Sigma$ : diagonal matrix whose entries are $\sigma_i$
 \end{enumerate}
 \section{Camera Calibration}
-\subsection*{a}
-From the result of SVD, 
+\subsection*{a : Show that the solution $\mathbf{p}$ is the last column of $\mathbf{V}$ corresponding to the smallest singular value of $\mathbf{A}$.}
+\noindent From the result of SVD, 
 \begin{equation}
     \mathbf{AV=U\Sigma}
 \end{equation}
@@ -56,7 +56,7 @@ This results in $\mathbf{Ap} =\sum_i a_i \mathbf{Av_i} = \sum_i a_i\sigma_i \mat
 It is a convention to make the diagonal entries of $\mathbf{\Sigma}$, $\sigma_i$, be ordered, that is, $\sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_r$.
 Thus, to minimize equation \ref{eqn2}, $a_1 = a_2 = \cdots = a_{r-1} = 0$ and $a_r = 1$, since $\mathbf{p}$ is normalized. This implies $\mathbf{p = v_n}$.(note that $r = n$ since we assumed over-determined system.)
 
-\subsection*{b} 
+\subsection*{b : Given the following corresponding points, determine the camera projection matrix $\mathbf{P}$ using the SVD method} 
 The following code is the implmentation to calculate the camera matrix for given corresponding points. 
 I truncated the data load code in the following code for readability. Please refer to my jupyter note submission to get the whole implementation.
 \begin{python}
@@ -89,7 +89,7 @@ The result of the code above is
  [ 1.67933533e-06  2.74767684e-06 -6.83964827e-07 -1.32882928e-03]]
 \end{python}
 
-\subsection*{c}
+\subsection*{c : Another method to determine $\mathbf{P}$ is using the pseudo inverse. By setting $\mathbf{m_34} = 1$, we have $\mathbf{Ap = b}$, and the least square solution $\mathbf{p = } \text{argmin}_\mathbf{P} \lVert\mathbf{Ap - b}\rVert$, become $\mathbf{p = A^\dagger b}$ where $\mathbf{A^\dagger = (A^TA)^{-1}A^T} $ is the pseudo inverse of $\mathbf{A}$. Determine $\mathbf{P}$ for the data in (b) using the pseudo inverse method.}
 Before determining $\mathbf{P}$, I proved that $\mathbf{p} = \mathbf{A}^\dagger \mathbf{b}$.
 Consider SVD of $\mathbf{A = U\Sigma V^T} \in \mathbb{R}^{m\times n}$, where $\mathbf{U}\in O(m), \mathbf{\Sigma} \in \mathbb{R}^{m\times n}, \mathbf{V} \in O(n)$.
 \begin{equation}
