@@ -1,0 +1,205 @@
+
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{kotex}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{siunitx} 
+\usepackage{enumerate} 
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{tikz,pgfplots}
+\usepackage{wasysym}
+\usepackage{geometry}
+\usepackage{authblk}
+\usepackage{kotex}
+\usepackage{bibunits}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{pythonhighlight}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{array}
+
+\geometry{
+    a4paper,
+    total={170mm,257mm},
+    left=20mm,
+    top=20mm,
+}
+
+\title{\textbf{Introduction to Computer Vision : HW 3}}
+\author{Jeong Min Lee}
+
+\begin{document}
+\maketitle
+\section*{1}
+\subsection*{Visualize the data distribution. Visualize the geometric interpretation of the eigenvalues and eigenvectors w.r.t the data distribution. Visualize the optimal line on the data distribution.}
+
+\begin{figure}[!h]
+    \begin{center}
+        \includegraphics*[scale = 0.4]{./fig/fig1.png}
+    \end{center}
+    \caption{The result of least square line fitting. The dotted red line is the optimal line calculated by least square. Also, the two blue arrows are the eigenvectors of $\mathbf{U^TU}$. Note that the eigenvectors are scaled by their eigenvalues. }
+\end{figure}
+
+The figure above illustrates the least square line fitting with the original data distribution. 
+See the source code attached to get the implmentation. 
+Note that I rescaled the eigenvalue of each eigenvector for visualization. See the table \ref{tab1} to get the eigenvalues.
+
+\begingroup
+\renewcommand{\arraystretch}{2}
+\begin{table}[]
+    \begin{center}
+        \begin{tabular}{|*2{>{\renewcommand{\arraystretch}{1}}c|}}
+            \toprule
+            Target                                     & Result                                                                                           \\ \midrule
+            $\mathbf{U^TU}$                            & $ \left[ \begin{array}{cc} 683658.18046828 & 207951.49725483  \\ 207951.49725483 & 435545.18695289 \end{array}\right]$ \\
+            \multirow{2}{*}{eigenvectors(eigenvalues)} & $(0.86957598, 0.49379917)^T \; (801745.93740725)$                                                      \\
+                                                       & $(-0.49379917, 0.86957598)^T \; (317457.43001391)$                                                     \\
+            optimal d                                  & 3.3100403890171823                                                                               \\
+            optimal $\mathbf{n}$                       & (-0.49379917 , 0.86957598)                                                                       \\ \bottomrule
+            \end{tabular}
+    \end{center}
+    \caption{The calculation result in the process of least square fitting.}
+    \label{tab1}
+\end{table}
+\endgroup
+
+\section*{2}
+\subsection*{Show that the vector v that maximizes the variance of the projected samples of $\mathbf{u}_i$ is the principal component,}
+Suppose $\lVert \mathbf{v} \rVert^2 = 1$, to compare $var(\mathbf{v})$ fairly.
+Consider the optimization problem as follow:
+\begin{equation}
+    \text{maximize } \mathbf{v^T\Sigma v} \text{ where } \lVert \mathbf{v}\rVert=1
+\end{equation}
+To solve the problem above, Lagrangian multipliers should be introduced.
+\begin{equation}
+    \mathcal{L} = \mathbf{v^T\Sigma v} - \lambda \lVert \mathbf{v}\rVert^2
+\end{equation}
+Taking derivative with respect to $\mathbf{v}$, the necessary conditions for optimum are derived. 
+\begin{align*}
+    &{\partial \mathcal{L}\over \partial \mathbf{v}} = (\Sigma + \Sigma^T)\mathbf{v} - 2\lambda \mathbf{v} = 0\\
+    &\therefore \Sigma \mathbf{v} = \lambda \mathbf{v}
+\end{align*}
+Thus, the optimum of the problem above is one of the eigenvectors of matrix $\Sigma$.
+Since $\mathbf{v^T\Sigma v} = \lambda \mathbf{v^Tv} = \lambda$, the optimum is the eigenvector whose eigenvalue is the largest among the eigenvetors of $\Sigma$.
+
+\subsection*{What the relationship between $\Sigma$ and the second moment matrix $U^TU$}
+
+\begin{align*}
+    U^TU &= \begin{pmatrix}
+        \mathbf{u}_1, \mathbf{u}_2, \cdots, \mathbf{u}_n
+    \end{pmatrix} \begin{pmatrix}
+        \mathbf{u}^T_1\\ \mathbf{u}^T_2 \\ \cdots \\ \mathbf{u}^T_n
+    \end{pmatrix}\\ 
+    &= \sum_{i=1}^n \mathbf{u}_i\mathbf{u}_i^T \\
+    &= n\Sigma
+\end{align*}
+\subsection*{What is the relationship between $\mathbf{v}$ and the line normal vector $\mathbf{n}$ that you obtained from the second moment matrix?}
+Recall that $\mathbf{v}$ is the eigenvector of $\Sigma$ whose eigenvalue is the largest, while $\mathbf{n}$ is the eigenvector of $\mathbf{U^TU}$ whose eigenvalue is the smallest. 
+Since $\Sigma = \frac{1}{n}\mathbf{U^TU}$, $\mathbf{n}$ is the eigenvector of $\Sigma$ whose eigenvalue is the smallest. 
+Even though $\mathbf{n}$ and $\mathbf{v}$ are eigenvector of $\Sigma$, their eigenvalue are distinct, since we select the largest and the smallest. Thus, thank to the Theorem A, they are orthogonal, i.e. $\mathbf{v^Tn} = 0$.\\
+\noindent
+\textbf{Theorem A.}
+The eigenvectors of simmetry matrix whose eigenvalue are mutually distinct are orthogonal.
+\textbf{Proof}
+Let $\mathbf{A}$ be the symmetry matrix. Suppose $\mathbf{v}$ and $\mathbf{u}$ are eigenvectors of matrix $\mathbf{A}$ with eigenvalue $\nu, \mu(\nu \neq \mu)$, respectively
+Then, 
+\begin{equation*}
+    \mathbf{u^TAv} = \mathbf{v^TAu} = \mu \mathbf{u^Tv} = \nu \mathbf{v^Tu}
+\end{equation*}
+Thus, $(\mu - \nu) \mathbf{v^Tu} = 0$ implies $\mathbf{v^Tu} = 0$, given $\mu \neq \nu_\blacksquare$.
+
+\section*{3}
+\subsection*{Obtain your own images (3 images, $I_1, I_2, I_3$ ) by taking pictures of a scene in different
+views by rotating your smart phone camera. }
+\begin{figure}[!h]
+    \begin{center}
+        \includegraphics*[scale = 0.35]{./fig/fig2}
+    \end{center}
+    \caption{The original images with size rescaling.}
+\end{figure}
+
+Note that this is a photo that is taken by my own.
+
+\subsection*{Detect feature points in each image. You have to make the feature points evenly distributed over each image and avoid multiple detections at the same point.}
+\begin{figure}[!h]
+    \begin{center}
+        \subfigure[]{
+            \includegraphics*[scale = 0.35]{./fig/fig3}
+        }
+        \subfigure[]{
+            \includegraphics*[scale = 0.35]{./fig/fig4}
+        }
+        \subfigure[]{
+            \includegraphics*[scale = 0.35]{./fig/fig8}
+        }
+    \end{center}
+    \caption{The result of feature extraction by using SIFT. (a) The result of SIFT to extract the feature. (b) To make the featrue points evenly distributed over each image, adaptive non-maximum supression is introduced. (c) The coverage of keypoints computed using Gaussian kernel}
+    \label{fig3}
+\end{figure}
+
+As the figure \ref{fig3} depicts, the SIFT success to extract the features. To avoid the features to be overlapped, I tried to apply Adaptive Non-Maximum Supression(ANMS), refering to the Bailo \textit{et.al.}\cite{bailo2018efficient}.
+However, eventhough the ANMS applied, the resultant images are similar to the original ones. 
+This implies that SIFT feature without ANMS are evenly distributed. See figure \ref{fig3} (c) to get how the keypoints are distributed.
+
+\subsection*{Find the putative matches between images $I_i$ and $I_{i+1}$. Display the detected feature correspondences using lines or vectors overlaid on the
+images.}
+
+\begin{figure}[!h]
+    \begin{center}
+        \subfigure[]{
+            \includegraphics*[scale = 0.5]{./fig/fig5.png}
+        }
+        \subfigure[]{
+            \includegraphics*[scale = 0.5]{./fig/fig6.png}
+        }
+    \end{center}
+    \caption{(a) The putative matches between images $I_1$ and $I_2$. (b) The matches between images $I_2$ and $I_3$.}
+    \label{fig4}
+\end{figure}
+
+As the figure \ref{fig4} shows, the matching between the two images are successful. 
+There are some erroneous matches due to the noise of image, illuminations of the sun and reflection due to the smooth surface of the pillars. However, they are not that crucial in the following tasks, so ignored.
+
+\subsection*{Determine the homographies $H_{12}$,$H_{32}$ using RANSAC function.}
+
+\begin{python}
+H_12 = [[ 1.75851228e+00  4.83310308e-02 -1.47635707e+02]
+ [ 2.77217109e-01  1.45647680e+00 -5.08731731e+01]
+ [ 2.80065842e-03  1.35878837e-05  9.97068339e-01]]
+
+H_32 = [[ 4.22939925e-01 -2.71477408e-02  2.25430247e+02]
+ [-2.21725216e-01  8.54010577e-01  6.81337676e+01]
+ [-1.43509611e-03 -1.59134790e-05  1.00142383e+00]]
+\end{python}
+
+I estimated the homographies $H_{12}, H_{32}$, using RANSAC function. 
+Note that the $(3,3)$ elements of both homographies are not exactly one due to floating number limitation. 
+
+\subsection*{Mosaic the three images by warping other images to the plane of $I_2$.}
+Using the homographies estimated above, images $I_1, I_3$ are wraped to the plane of $I_2$. As the figure \ref{fig5} elucidates, the stitched image is quite nartural. Note that I implemented the function \textbf{crop\_images()} to get more organic image. 
+The calculated symmetry transfer error is 534818.6942 for $H_{12}$, while 970885.0502 for $H_{32}$.
+
+\begin{figure}[!h]
+    \begin{center}
+        \subfigure[]{
+            \includegraphics*[scale = 0.3]{./fig/fig7.png}
+        }
+        \subfigure[]{
+            \includegraphics*[scale = 0.3]{./fig/fig9.png}
+        }
+    \end{center}
+    \caption{(a) Stitched image of $I_1, I_2, I_3$ using homographies estimated RANSAC algorithm. (b) The stitched images with cropping the margin.}
+    \label{fig5}
+\end{figure}
+
+\bibliographystyle{unsrt}
+\bibliography{ref}
+\end{document}

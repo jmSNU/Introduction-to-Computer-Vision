@@ -1,8 +1,8 @@
 # Fdb version 4
-["pdflatex"] 1714618301 "/Users/jeongminlee/Desktop/2024 Spring/Introduction_to_computer_vision/hw2/report.tex" "report.pdf" "report" 1714618302 0
+["pdflatex"] 1714740107 "/Users/jeongminlee/Desktop/2024 Spring/Introduction_to_computer_vision/hw2/report.tex" "report.pdf" "report" 1714740108 0
   "../hw2/fig2.png" 1714614406 472719 0372fbe766e91a05397da6433f50f291 ""
   "../hw2/fig3.png" 1714617446 341161 bee2e404681b40d49014baa2b75fef32 ""
-  "/Users/jeongminlee/Desktop/2024 Spring/Introduction_to_computer_vision/hw2/report.tex" 1714618301 15151 125f1694b99a002fde59280e4c75dc39 ""
+  "/Users/jeongminlee/Desktop/2024 Spring/Introduction_to_computer_vision/hw2/report.tex" 1714740107 15162 3b40bfbe4ea398b613a77c4a350f5381 ""
   "/opt/homebrew/Cellar/texlive/20230313_3/share/texmf-dist/fonts/map/fontname/texfonts.map" 1678549815 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/opt/homebrew/Cellar/texlive/20230313_3/share/texmf-dist/fonts/map/pdftex/updmap/pdftex.map" 1678549815 4609045 74543da1ab9350ba886fce0af49a2cfd ""
   "/opt/homebrew/Cellar/texlive/20230313_3/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1678549815 1004 54797486969f23fa377b128694d548df ""
@@ -238,9 +238,9 @@
   "/opt/homebrew/Cellar/texlive/20230313_3/share/texmf-dist/web2c/texmf.cnf" 1678549815 40748 4081c8bc921e56c865f975bd762e388c ""
   "/opt/homebrew/Cellar/texlive/20230313_3/share/texmf-var/web2c/pdftex/pdflatex.fmt" 1678549815 7884066 53a9aad02a5b14fbfbcc78ec177fdd6d ""
   "fig1.png" 1714227247 28198 664dbb47ebce7a8351298c7270082ccf ""
-  "report.aux" 1714618302 1346 1f6202e80812219b4512731e3898f84a "pdflatex"
-  "report.out" 1714618301 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "report.tex" 1714618301 15151 125f1694b99a002fde59280e4c75dc39 ""
+  "report.aux" 1714740108 1346 1f6202e80812219b4512731e3898f84a "pdflatex"
+  "report.out" 1714740108 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "report.tex" 1714740107 15162 3b40bfbe4ea398b613a77c4a350f5381 ""
   (generated)
   "report.aux"
   "report.log"
